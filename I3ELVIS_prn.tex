@@ -97,6 +97,10 @@ vy & Velocity in y & $[m/s]$ \\
 vz & Velocity in z & $[m/s]$ \\ 
 ro & Density & $[kg/m^3]$ \\ 
 nu & Viscosity & $[Pa*s]$ \\ 
+nxx & normal viscosity  & $[Pa*s]$ \\ 
+nxy & shear viscosity on z axis & $[Pa*s]$ \\ 
+nxz & shear stress on y axis & $[Pa*s]$ \\ 
+nyz & shear stress on x axis & $[Pa*s]$ \\ 
 tk & Temperature & $[K]$ \\ 
 cp & Heat capacity & $[J/kg]$ \\ 
 et & Thermal expansivity & $[1/K]$ \\ 
@@ -139,26 +143,84 @@ bondn1[m3] & $PAR1+1$ value in BC equ., $PAR1=0$ means no boundary \\
 
 \subsection{Part VI: Markers}
 
+\subsubsection{Principal markers}
 The total number of markers is $marknum$. For each marker the following parameters is given:
 
 \begin{table}[H]
 \small
 \centering
-\begin{tabular}{l p{8cm}}
+\begin{tabular}{c c c c c}
 \toprule
-Parameter & Description\\
+name & type & size & description & note \\ 
 \midrule
-markx & Marker position in x \\ 
-marky & Marker position in y \\ 
-markz & Marker position in z \\ 
-markk & Temperature in K \\ 
-markw & Water percentage \\ 
-markd & Density \\ 
-markex & Accumulated meltfraction \\ 
-marktm & Creation time \\ 
-markc1 & Melt composition: Granitic part \\ 
-markc2 & Melt composition: Dacite part \\
-markt  & Rock type \\
+markx & float & MAXMRK & x position & • \\
+marky & float & MAXMRK & x position & • \\
+markz & float & MAXMRK & x position & • \\
+markw & float & MAXMRK & water percentage & • \\ 
+markd & float & MAXMRK & density & • \\
+marktm & & & • & • \\ 
+markt & char & MAXMRK & rocktype in marker & • \\ 
+
+markk & float & MAXMRK & temperature in K &  \\ 
+
+markv & float & MAXMRK & viscosity & • \\ 
+
+marke & float & MAXMRK & strain at marker &  !! $\epsilon$ not $\dot{\epsilon}$ \\ 
+
+markex & float & MAXMRK & melt fraction & • \\ 
+
+markkt & double & MAXTMR & thermal conductivity & • \\
+
+markkf & double & MAXTMR & thermal conductivity T coeff & • \\
+
+markkp & double & MAXTMR & thermal conductivity P coeff & • \\ 
+
+markcp/markcp0 & double & MAXTMR & thermal capacity & • \\ 
+
+markaa & double & MAXTMR & first density parameter &  \\ 
+
+markbb/markbb0 & double & MAXTMR & second density parameter & • \\ 
+\bottomrule
+\end{tabular}
+\caption{prn-file Marker information block}
+\label{tbl:prn_marker_info}
+\end{table}
+
+\subsubsection{Secondary markers}
+Those markers are not defined globaly (i.e. \textcolor{blue}{head3mg.c}) but are internal to functions in the code.
+
+\begin{table}[H]
+\small
+\centering
+\begin{tabular}{c c c c c}
+\toprule
+name & type & size & description & function \\  
+\midrule
+sigin & double & variable & stress rate invariant & viscalc() \\
+
+epsin & double & variable & stress rate invariant & viscalc() \\
+ 
+marksii1 & double & variable & stress rate invariant & movemark() \\ 
+
+markeii1 & double & variable & strain rate invariant & movemark() \\ 
+
+markrii1 & double & variable & strain rate & movemark() \\ 
+
+mtk & double & variable & conversion in double of markk & movemark() \\ 
+
+mpb & double & variable & conversion in bar of pressure at markers & movemark() \\ 
+
+mnu & double & variable & saved viscosity & movemark() \\ 
+
+mro/mro0 & double & variable & density & ronurecalc() \\
+
+mcp/mcp0 & double & variable & thermal capacity & ronurecalc() \\
+
+mkt & double & variable & thermal conductivity & ronurecalc() \\
+
+mht & double & variable & radiactive energy source & ronurecalc() \\
+
+xmelt/xmelt0 & double & variable & melt fraction with and without counting previous melt & meltpart0() \\
 \bottomrule
 \end{tabular}
 \caption{prn-file Marker information block}

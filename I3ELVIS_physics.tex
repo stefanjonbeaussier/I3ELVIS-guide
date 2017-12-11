@@ -82,14 +82,38 @@ H_L = const.
 
 The resulting set of the above equations, together with equations \eqref{eqs:Boussinesq} and \eqref{eqs:extendedBoussinesq}, is called the extended Boussinesq approximations.
 
-\subsubsection{Rheology}
+\subsubsection{Thermodynamics}
 
 \paragraph{Equation of State}
 % see code: mark3mg.c <dencalc()> l.945
-\begin{equation}\label{eqs:EOS}
-\rho = \rho_r  \left[ 1 + \beta \left( P - P_r \right) \right] \times \left[ 1 - \alpha \left( T - T_r \right) \right]
+Different implementation depending on the value of the variable \textbf{\texttt{densimod}} are available.
+\begin{itemize}
+ \item 0 : constante viscosity $\rho = \rho_0 $.
+ \item 1 : P,T dependant density $\rho = (1- b_{\rho}*(T_K-298.15))*(1+ a_{\rho}*(P_{kbar}-0.001))$
+ \item 2 : add the effect of thermodynamic database on density and water content. \\
+ $ \rho = \rho / (1 + \Delta H_2O * (\frac{\rho}{1050}-1) *10^{-2})$ || $\Delta H_2O$ is the difference in water content introduced by recalculation form the database.
+ \item 3 : only get water content from thermodynamic database
+\end{itemize}
+Furthermore the effect of mantle depletion is taken in account in density calculation : 
+$\rho = 1.0 - 0.4 * ex$. $ex$ being the amount of melt extracted from the marker saved in \textbf{\texttt{markex}} variable.
+
+
+\paragraph{ Thermal conductivity}
+Thermal conductivity is by default calculated as dependant of pressure and temperature. An enhanced conductivity is calculated for  based on equations from Gregg et al 2009.\\
+\begin{equation}
+  K_T = K_{T0} + \frac{K_{Tkoef}}{T_K + 77.0}* exp( K_{Pkoef}*P_{bar} )
 \end{equation}
-where $\rho_r$ is the reference density given separately for each rock type, $P_r=1.0\,bar$ is the reference pressure, $T_r=298.15\,K$ is the reference temperature, $\alpha$ is the thermal expansion and $\beta$ is the compressibility.
+$K_{TO}$, $K_{Tkoef}$ and $K_{Pkoef}$ are fixed for each rocktype. \\
+
+Enhanced conductivity is calculated in oceanic lithosphere when in are in an area defined by the parameters: waterlev, circdepth and circtemp. 
+\begin{equation}
+ K_T = 3 *(Nu -1)* exp ( \frac{3}{4} [2-\frac{T_k-273.15}{T_{circ}-273.15} - \frac{y-markto}{y_{circ}} ] ) 
+\end{equation}
+$Nu$ is the nusselt number.
+
+\subsubsection{Rheology}
+
+
 
 \paragraph{Viscosity}
 % see mark3mg.c <viscalc()>
@@ -98,6 +122,15 @@ where $\rho_r$ is the reference density given separately for each rock type, $P_
 \sigma_{yield} = C + sin(\phi_{dry})(1-\lambda) P
 \end{equation}
 where $\sigma_{yield}$ denotes the shear stress limit after which plastic yielding occurs, $C$ is the cohesion, $\phi_{dry}$ is the effective internal friction angle in dry rock, $\lambda=1-\dfrac{P_{fluid}}{P_{solid}}$ is the pore fluid pressure factor and $P=P_{solid}$ is the mean stress of the solid.
+
+\begin{equation}
+\begin{split}
+ C=a_1, sin(\phi_{dry})=b_1, \forall \varepsilon_{II} > \varepsilon_1 \\
+ C=a_0, sin(\phi_{dry})=b_0, \forall \varepsilon_{II} < \varepsilon_0 \\
+ C = a_0 + \frac{\varepsilon_{II} - \varepsilon_0}{\varepsilon_1 - \varepsilon_0} (a_1 -a_0) \\
+ sin(\phi_{dry}) = b_0 + \frac{\varepsilon_{II} - \varepsilon_0}{\varepsilon_1 - \varepsilon_0} (b_1 -b_0)
+ \end{split}
+ \end{equation}
 
 \paragraph{Peirl's creep (Katayamo \& Karato, 2008)}
 \begin{equation}\label{eqs:peirls_strain_rate}

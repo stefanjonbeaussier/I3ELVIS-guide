@@ -1,0 +1,170 @@
+% INDEX of functions and variables
+
+\section{Index}
+
+\subsection{Function Index}
+
+\subsubsection*{functions in \textcolor{blue}{load3mg.c} :}
+
+\textbf{\texttt{int loadconf()}} : load configuration files \textcolor{blue}{mode.t3c} to variables. Has a binary and text option but only the binary option is used. Return the number of the input file: content of \textcolor{blue}{files.t3c}-1. If the value is incorrect it is set to 0.
+\\
+\textbf{\texttt{void loader()}} : load information from datafile to variables.
+\\
+\textbf{\texttt{void gridcheck()}} : verify that the size of grid and number of markers are compatible with the calculation matrices size. Then create the different grid levels for the multi-grid method (variables \texttt{mgg*[multinum][mg*]}). 
+\\
+\textbf{\texttt{void saver(int,int)}} : save the variables to the output file. The input are the index of the cycle between each output files and the number of the output file.
+\\
+\textbf{\texttt{void ffscanf()}} : read text (from configuration files) while omitting text and comments (sign "/" for comments in configuration file) and suppressing the last character (always space in C).
+\\
+
+\subsubsection*{functions in \textcolor{blue}{heat3mg.c} :}
+
+\textbf{\texttt{void titerate(int m0)}} : resolve temperature equation.
+\\
+\textbf{\texttt{double heaterr}} : gives the left sides, right side or error of temperature equation for resolution.
+\\
+
+\subsubsection*{functions in \textcolor{blue}{mark3mg.c} :}
+this part of the code principally control the movement of marker and associated recalculations of parameters. In particular the water effects are implemented in it.
+\\
+\textbf{\texttt{void antigor(double mtk, double mpb long int mm1)}} : Look if the marker is in the P,T stability field of antigorite (from Schmidt and Poli 1998) the marker rock type is changed from serpentinized mantle(13) to hydrated mantle(11). The effect is that it weaken the mantle.
+\\
+\textbf{\texttt{long int m[1,2,3]serch(double x)}} : find the closest lower node to the position x using bisection method. 1,2,3 respectively does it for x,y,z. it respectively return m10,m20,m30 for x,y,z. 
+\\
+\textbf{\texttt{void movemark()}} : Principal function of \textcolor{blue}{mark3mg.c :} it implement all the sub-steps.
+                                  \begin{itemize}
+                                   \item \textcolor{red}{INCOMPLETE!!!}
+                                   \item run the melt extraction and the topography correction
+                                   \item compute velocity, stress, strain and stress/strain invariants on marker for non water markers(<50) and external markers inside the grid ($\geq 100$).
+                                   use them to compute viscosity on markers
+                                  \end{itemize}
+                                  
+\textbf{\texttt{void tdbasecalc1(double mpb, double mtk,int mm2, long int mm1, eps1)}} : Use thermodynamic database for $\rho$ and $C_p$ calculation and save to eps1 $\rho$, $wa\%$, $C_p$, $\beta$ (isentropic thermal compressibility), $\alpha$ (compressibility factor), and activation enthalpy. The input are mpb,mtk, rocktype(mm2), marker index(mm1), and eps1 pointer.
+\\                                
+\textbf{\texttt{long int m[1,2,3]serch(double x)}} : find the closest lower node to the position x using bisection method. 1,2,3 respectively does it for x,y,z. it respectively return m10,m20,m30 for x,y,z. 
+\\                              
+\textbf{\texttt{double denscalc1(double mtk, double mpb, int mm2, double *eps1)}} : Calculate density for markers and return the result of calculation depending of whivh densimod we are in. This function only P,T dependant effect. The effect of the thermodynamic database and water is calculated later in \textbf{\texttt{ronurecalc}}.  
+\\
+\textbf{\texttt{void prcalc1(double x, double y, double z, double *eps1, long int *wn1)}} : Interpolate pressure from nodes to marker and return the value in \textbf{\texttt{eps1[10]}}.  
+\\
+\textbf{\texttt{void melting1(double mtk, double mpb, long int mm1, double *eps1)}} : Check marker rocktype and call function \textbf{\texttt{meltpart11}} define the melting effects on rock type. the result is saved in \textbf{\texttt{eps1[21]}}.  
+\\
+\textbf{\texttt{void meltpart11(double mtk, double mpb, long int mm1, double *eps1)}} : Calculate the defined solidus and liquidus based one rock type and litterature defined equations. The melt fraction and latent enthalpy are calculated and saved in \textbf{\texttt{eps1[21]}} and \textbf{\texttt{eps1[22]}}, respectively.  
+\\
+\textbf{\texttt{void meltpart0(double mtk, double mpb, long int mm1,int mm2, double *eps1)}} : Calculate the melt density heat capacity and thermal conductivity and save it to \textbf{\texttt{eps1[20][22][23][25][26]}}.  
+\\
+\textbf{\texttt{void meltextract()}} : Control melt markers extraction and accretion. 
+\\
+\textbf{\texttt{void epscalc1(double x, double y, double z, int yn, double *eps1, long int *wn1)}} : Interpolate exx, eyy, ezz, sxx, syy, szz, exy, sxy, exz, sxz, eyz, syz and pr from nodes and save them to \textbf{\texttt{eps1[]}}.  
+\\
+\textbf{\texttt{void tkrecalc()}} : Replace boundary conditions inside $T_K$.  
+\\
+\textbf{\texttt{double s??calc(long int m1, long int m2, long int m3, double ynval, int mgi, double *eps1, long int *un1, double *ui1)}} : Calculate $\nu_{eff}$, $\sigma??$ and $\epsilon??$. Depending on \textbf{\texttt{ynval}} value it is either return as output or is written to \textbf{\texttt{ui1}}.  
+\\
+\textbf{\texttt{void tkcalc1(double x, double y, double z, double *eps1, long int *wn1, double wi1)}} : Interpolate temperature from nodes to markers and save the value in \textbf{\texttt{eps1[]}}.  
+\\
+\textbf{\texttt{void ronurestrict(int mgi)}} : Interpolate $\rho$ and $\nu$ from grid level \textbf{\texttt{mgi-1}} to \textbf{\texttt{mgi}}.  
+\\
+
+\subsection{Variables index}
+
+\subsubsection{Computation variables}
+
+\textbf{\texttt{mgi}} : Index used to define the level in the multi-grid. It is used for rheological parameters calculation.
+\\
+\textbf{\texttt{gx/gy/gz[MAXXLN]}} : position of nodes for the initial grid. This grid is not staggered (possible in other version?).
+\\
+\textbf{\texttt{mg*[multinum]}} : vector of the number of nodes for the different grids. there is for finer level: $mgx\longmapsto x=xnumx, mgy\longmapsto y=ynumy, mgz\longmapsto z=znumz, mgn\longmapsto nodenum, mgp\longmapsto P=0, mgs\longmapsto s=1, mgxy\longmapsto x*y=xnumx*ynumy $.
+And $mgp[i]=mgp[i-1]+mgn[i-1],\  mgs[i]=2*mgs[i-1],\  mg(x-y-z)[i]=( mg(x-y-z)[i-1] -5)/2+5,\  mgn[i]= \Sigma mg(x-y-z)[i]$.
+\\
+\textbf{\texttt{mgg*[multinum][mg*]}} : position of nodes for the different grids. See \texttt{mg*} for more.
+\\
+\textbf{\texttt{double *kf}} : size of cell for a define multigrid level.
+\\
+\textbf{\texttt{min**1[100] and max**1[100]}} : maximum and minimum value for the given variable for a given grid.
+\\
+\textbf{\texttt{min** and max**}} : maximum and minimum value for the given variable for all grids.
+\\
+\textbf{\texttt{maxvxyz}} : maximum velocity of the previous step.
+\\
+\textbf{\texttt{markx/marky/markz[MAXMRK]}} : position of the markers. Their position is randomized from the nodes position when they are initialized. The randomization intervals are defined by xnonstab/ynonstab/znonstab.
+\\
+\textbf{\texttt{tk[MAXNOD], tk0-tk1-tk2[MAXNN]}} : matrix of temperatures. \texttt{tk0} is the previous timestep temperature.
+\\
+\textbf{\texttt{bondv1[MAXBON][2]}} : matrix of boundary conditions. \texttt{bondv1[:][0]} correspond to $CONST$ and \texttt{bondv1[:][1]} correspond to KOEF1.
+\\
+\textbf{\texttt{bondn1[MAXBON]}} : matrix of bondary parameter $PAR1$.It control what type of boundary condition we have. If $PAR1=0$ it mean we do not impose a boundary condition.
+\\
+\textbf{\texttt{double mpb}} : pressure in bar. Is used for water transport.
+\\
+\textbf{\texttt{float td[351][351][15][3]}} : vecotr of vector of thermodynamic database it is filed by the function \texttt{loadconf}.The two first vector are temperature and pressure dimension, respectively. The others corresponds to different variables. In the last vector array one is density, 2 enthalpie
+\\
+\textbf{\texttt{double tkstp, pbstp, tkmin, pbmin, tknum, pbnum}} : steps of temperature and pressure of the thermodynamic database. Minimum of temperature and pressure of the thermodynamic database. Number of steps of the thermodynamic database.
+\\
+\textbf{\texttt{double mycel}} : steps of temperature and pressure of the thermodynamic database. Minimum of temperature and pressure of the thermodynamic database. Number of steps of the thermodynamic database.
+\\
+
+\subsubsection{counters}
+Only global counters are listed in this section.
+\\
+\\
+\textbf{\texttt{n0}} : global counter of the timesteps between each output file. goes from from 0 to \texttt{cycmax-1}. It is printed in the terminal as "KRUG : ".
+\\
+\textbf{\texttt{n1}} : global counter that save the thread ID. Is used to the parallel part of the code (OpenMP).
+\\
+\textbf{\texttt{f0}} : global counter of the output file written during the run.
+\\
+\textbf{\texttt{m1}} : usally local node counter.
+\\
+\textbf{\texttt{mm1}} : usally marker counter.
+\\
+\textbf{\texttt{mm2}} : usally rocktype counter.
+\\
+\textbf{\texttt{markfluid}} : number of fluid markers.
+\\
+\textbf{\texttt{m2prn}} : counter of the V-cycles of the multi-grid method. Is printed in the terminal as "Cycles : ". 
+\\
+\textbf{\texttt{m1,m2,m3,m4}} : Nodes counter used in the codes. m1 is for x, m2 is for y, m3 is for z. All nodes parameters are vector. thus, m4 , the index of unknown is use to go along them. it is defined by : $m4 = ynum*xnum*m3 + ynum*m1 + m2$.
+\\
+\textbf{\texttt{mcmax1}} : node counter. Is used to relate dimension counters to position in the variables vectors (vx,vy,vz,pr...)
+\\
+\textbf{\texttt{mcmax0}} : degrees of freedom counter. Used to relate dimension counters to position in the sol0 vectors.
+\\
+\textbf{\texttt{nodenumX}} :  Correspond to the number of node time X. Example: \texttt{nodenum8=nodenum*8}.
+\\
+\textbf{\texttt{meltnum}} :  Melt counter.
+\\
+
+\subsubsection{Dump variables}
+Many variables are used for temporary storage of data in some of the code functions. This index shows to which global variables they correspond to facilitate the understanding of the code. \\
+
+\textbf{\texttt{eps1[100]}} : used to store markers properties during markers loop. each array correspond to a specific property. \\
+
+\begin{tabular}{c c c c c c c c c c}
+\hline
+ 0       & 1   & 2        & 3   & 4    &  5   & 6    & 7    &  8   & 9  \\ 
+ $e_{II}$/tk0 & tk1 & nueff/tk & tk2 & mexx & meyy & mezz & mexy & mexz & meyz \\
+\hline
+10  & & & & & & & & &   \\ 
+mpb & & & & & & & & &   \\
+\hline
+20             & 21    & 22           & 23     & & 25      & 26 & & & \\
+std adia terme & xmelt & $H_{latent}$ & $\rho$ & & Cp melt & Kt & & & \\
+\hline
+   & & & & & & & & & \\ 
+   & & & & & & & & & \\
+\hline 
+     & 41  & 42  & 43  & 44  & 45  & 46   & & & \\ 
+     & mro & mwa & mcp & mbb & maa & mdhh & & & \\
+\hline
+ & & & & 54   & 55   & 56   & 57   & 58   & 59 \\ 
+ & & & & msxx & msyy & mszz & msxy & msxz & msyz \\
+\hline 
+   & & & & & & & & &  \\ 
+   & & & & & & & & &  \\
+\hline
+\label{marktable2}
+\end{tabular}
+
+\textbf{\texttt{wn1[500]}} : used to store nodes to marker positions while looping through markers. wn1[0]=x,wn1[1]=y,wn1[2]=z. \\
+

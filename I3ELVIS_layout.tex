@@ -1,0 +1,24 @@
+% Chapter code layout
+
+\section{Code Layout}
+
+\subsection{Files layout}
+ 
+Short description of the code files and their functions. \\
+The code is divided into eight .c files 
+   \begin{itemize}
+    \item \textcolor{blue}{in3mg.c :} This is the file that will read the parameters files
+    to write the initial condition file.  
+    \item \textcolor{blue}{i3mg.c :} Main code file.
+    \item  \textcolor{blue}{head3mg.c :} In this file are the global variable and function are declared (internal counters are declared inside the function or loop that use them). Most variables roles are describe in this file.
+    \item \textcolor{blue}{load3mg.c :} In this file are the functions to read the input files and write their content to the code variables, and to save the results to the output files. The functions have a binary or text option but only the binary option should be used as the text option would slow the code significantly.
+    \item \textcolor{blue}{move3mg.c :} Contain the function to resolve continuity-momentum equations. From the function to calculate the stress and strain to the multi-grid resolution functions.
+    \item \textcolor{blue}{mark3mg.c :} Contain all the interpolation functions and the functions to advect the marker.
+    \item \textcolor{blue}{gauss3mg.c :} others Gauss-Scheidel solvers
+    \item \textcolor{blue}{heat3mg.c :} Solve heat conservation equation and using the thermodynamic database.      
+    \end{itemize}
+    To those eight files we can add three configuration files. \textcolor{blue}{mode.t3c} that contain all the configurations and parameters of the code that you will be running and the name of all the output files. \textcolor{blue}{init.t3c} contain the parameters defining the initial geometry of model (support rectangular, Ellipsoidal and cylindrical geometry), the different rock types and there rheological parameters.\textcolor{blue}{files.t3c} contain only the number of the next output file (or 0). \\  
+Finally there is a large number of thermodynamics database that are used for proper calculation of temperature controlled by phase changes and rock behaviour in P,T,t conditions.
+
+\subsection{Functions layout}
+
