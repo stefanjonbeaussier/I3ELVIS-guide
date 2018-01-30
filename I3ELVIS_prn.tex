@@ -106,6 +106,7 @@ cp & Heat capacity & $[J/kg]$ \\
 et & Thermal expansivity & $[1/K]$ \\ 
 kt & Thermal conductivity & $[Wt/m/K]$ \\
 ht  & Heat sources & $[Wt/kg]$ \\
+rr  & grain size & $[m]$ \\
 \bottomrule
 \end{tabular}
 \caption{prn-file Node information block}
@@ -173,6 +174,10 @@ markkt & double & MAXTMR & thermal conductivity & • \\
 
 markkf & double & MAXTMR & thermal conductivity T coeff & • \\
 
+markrr & double & MAXTMR & grain size & only in grain reduction version \\
+
+markrn & double & MAXMRK & ductile viscosity ratio & only in grain reduction version \\
+
 markkp & double & MAXTMR & thermal conductivity P coeff & • \\ 
 
 markcp/markcp0 & double & MAXTMR & thermal capacity & • \\ 
@@ -187,7 +192,7 @@ markbb/markbb0 & double & MAXTMR & second density parameter & • \\
 \end{table}
 
 \subsubsection{Secondary markers}
-Those markers are not defined globaly (i.e. \textcolor{blue}{head3mg.c}) but are internal to functions in the code.
+Those markers are not defined globally (i.e. \textcolor{blue}{head3mg.c}) but are internal to functions in the code.
 
 \begin{table}[H]
 \small
@@ -205,6 +210,8 @@ marksii1 & double & variable & stress rate invariant & movemark() \\
 markeii1 & double & variable & strain rate invariant & movemark() \\ 
 
 markrii1 & double & variable & strain rate & movemark() \\ 
+
+markdis1 & double & variable & dissipation energy ($\sigma_{ii}*\epsilon_{ii}$) & viscalc() \\ 
 
 mtk & double & variable & conversion in double of markk & movemark() \\ 
 

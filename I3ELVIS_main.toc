@@ -1,0 +1,76 @@
+\select@language {english}
+\contentsline {section}{\numberline {1}Physics}{3}
+\contentsline {subsection}{\numberline {1.1}Basic physical principals}{3}
+\contentsline {subsubsection}{\numberline {1.1.1}The continuity equation}{3}
+\contentsline {subsubsection}{\numberline {1.1.2}The Navier-Stokes Euqation}{3}
+\contentsline {subsubsection}{\numberline {1.1.3}Heat conservation equation}{4}
+\contentsline {subsubsection}{\numberline {1.1.4}Thermodynamics}{5}
+\contentsline {paragraph}{\nonumberline Equation of State}{5}
+\contentsline {paragraph}{\nonumberline Thermal conductivity}{5}
+\contentsline {subsubsection}{\numberline {1.1.5}Rheology}{5}
+\contentsline {paragraph}{\nonumberline Viscosity}{5}
+\contentsline {paragraph}{\nonumberline Plastic yield strength}{5}
+\contentsline {paragraph}{\nonumberline Peirl's creep (Katayamo \& Karato, 2008)}{6}
+\contentsline {subsubsection}{\numberline {1.1.6}Impact treatment}{7}
+\contentsline {subsubsection}{\numberline {1.1.7}Computation of crust}{8}
+\contentsline {subsubsection}{\numberline {1.1.8}Phase transitions, melting and hydration reactions}{8}
+\contentsline {paragraph}{\nonumberline Melting}{8}
+\contentsline {paragraph}{\nonumberline Freezing}{8}
+\contentsline {paragraph}{\nonumberline Hydrated Peridotite}{8}
+\contentsline {paragraph}{\nonumberline Mantle hydration}{9}
+\contentsline {paragraph}{\nonumberline Crust hydration}{9}
+\contentsline {paragraph}{\nonumberline Layered Sedimentation}{9}
+\contentsline {paragraph}{\nonumberline Formation of new crust}{9}
+\contentsline {paragraph}{\nonumberline Antigorite weakening}{9}
+\contentsline {paragraph}{\nonumberline Eclogitization}{9}
+\contentsline {subsection}{\numberline {1.2}I2ELVIS}{9}
+\contentsline {subsection}{\numberline {1.3}I3ELVIS}{9}
+\contentsline {section}{\numberline {2}Code Layout}{11}
+\contentsline {subsection}{\numberline {2.1}Files layout}{11}
+\contentsline {subsection}{\numberline {2.2}Functions layout}{11}
+\contentsline {section}{\numberline {3}t3c files}{12}
+\contentsline {subsection}{\numberline {3.1}file.t3c}{12}
+\contentsline {subsection}{\numberline {3.2}init.t3c}{12}
+\contentsline {subsubsection}{\numberline {3.2.1}Grid parameter description}{12}
+\contentsline {subsubsection}{\numberline {3.2.2}Rock type description}{13}
+\contentsline {subsubsection}{\numberline {3.2.3}Boundary conditions}{16}
+\contentsline {paragraph}{\nonumberline P, Vx, Vy, Vz, T boundary conditions}{16}
+\contentsline {paragraph}{\nonumberline X, Y, Z coordinates definition}{17}
+\contentsline {paragraph}{\nonumberline M marker grid set to cell}{17}
+\contentsline {subsubsection}{\numberline {3.2.4}Box description}{17}
+\contentsline {subsubsection}{\numberline {3.2.5}Temperature box description}{18}
+\contentsline {paragraph}{\nonumberline Box type 0: simple box}{19}
+\contentsline {paragraph}{\nonumberline Box type 1\&4: age box}{19}
+\contentsline {paragraph}{\nonumberline Box type 5\&6: transitional box}{19}
+\contentsline {subsection}{\numberline {3.3}mode.t3c}{20}
+\contentsline {subsubsection}{\numberline {3.3.1}Timestepping description}{20}
+\contentsline {subsubsection}{\numberline {3.3.2}General parameters}{21}
+\contentsline {subsubsection}{\numberline {3.3.3}Erosion and Sedimentation parameters}{21}
+\contentsline {subsubsection}{\numberline {3.3.4}Velocity- and Pressure-iterations parameters}{22}
+\contentsline {paragraph}{\nonumberline viscmod: Effective viscosity interpolation}{22}
+\contentsline {subsubsection}{\numberline {3.3.5}Temperature-iterations parameters}{23}
+\contentsline {subsubsection}{\numberline {3.3.6}Hydration and melting parameters}{24}
+\contentsline {subsubsection}{\numberline {3.3.7}Collision velocity parameters}{24}
+\contentsline {section}{\numberline {4}Raw output files: .prn}{25}
+\contentsline {subsection}{\numberline {4.1}Part I: General Information}{25}
+\contentsline {subsection}{\numberline {4.2}Part II: Rock type information}{26}
+\contentsline {subsection}{\numberline {4.3}Part III: Nodes information}{26}
+\contentsline {subsection}{\numberline {4.4}Part IV: Gridline positions}{27}
+\contentsline {paragraph}{\nonumberline Position of gridlines in x direction}{27}
+\contentsline {paragraph}{\nonumberline Position of gridlines in y direction}{27}
+\contentsline {paragraph}{\nonumberline Position of gridlines in z direction}{27}
+\contentsline {subsection}{\numberline {4.5}Part V: Boundary Condition Equations}{27}
+\contentsline {subsection}{\numberline {4.6}Part VI: Markers}{28}
+\contentsline {subsubsection}{\numberline {4.6.1}Principal markers}{28}
+\contentsline {subsubsection}{\numberline {4.6.2}Secondary markers}{28}
+\contentsline {section}{\numberline {5}Index}{30}
+\contentsline {subsection}{\numberline {5.1}Function Index}{30}
+\contentsline {subsection}{\numberline {5.2}Variables index}{32}
+\contentsline {subsubsection}{\numberline {5.2.1}Computation variables}{32}
+\contentsline {subsubsection}{\numberline {5.2.2}counters}{33}
+\contentsline {subsubsection}{\numberline {5.2.3}Dump variables}{33}
+\contentsline {section}{\numberline {6}Numerical problems and solutions}{35}
+\contentsline {section}{\numberline {7}Usage of paraview}{36}
+\contentsline {subsection}{\numberline {7.1}Conversion from raw output to Paraview files}{36}
+\contentsline {subsection}{\numberline {7.2}Visualisation with Paraview}{36}
+\contentsline {subsubsection}{\numberline {7.2.1}Visualize composition}{36}
